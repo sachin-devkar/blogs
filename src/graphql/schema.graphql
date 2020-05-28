@@ -1,0 +1,2309 @@
+scalar Date
+scalar DateTime
+scalar Time
+scalar Long
+
+enum SortDir {
+  ASC
+  DESC
+  asc @deprecated(reason: "Enumerated values should be UPPER_CAMEL_CASE.")
+  desc @deprecated(reason: "Enumerated values should be UPPER_CAMEL_CASE.")
+}
+
+enum ProductConfiguration {
+  MOVIE
+  TV_SHOW
+  DIGITAL_AUDIO
+  PHYSICAL_AUDIO
+  MUSIC_VIDEO
+  OTHER
+  Movie @deprecated(reason: "Enumerated values should be UPPER_CAMEL_CASE.")
+  TVShow @deprecated(reason: "Enumerated values should be UPPER_CAMEL_CASE.")
+  DigitalAudio
+    @deprecated(reason: "Enumerated values should be UPPER_CAMEL_CASE.")
+  PhysicalAudio
+    @deprecated(reason: "Enumerated values should be UPPER_CAMEL_CASE.")
+  MusicVideo
+    @deprecated(reason: "Enumerated values should be UPPER_CAMEL_CASE.")
+  Other @deprecated(reason: "Enumerated values should be UPPER_CAMEL_CASE.")
+}
+
+enum TrackType {
+  MUSIC
+}
+
+enum DisplayStatus {
+  SUBMITTED
+  IN_PROGRESS
+  ACTION_REQUIRED
+  ERROR_CORRECTION
+  COMPLETED
+  submitted @deprecated(reason: "Enumerated values should be UPPER_CAMEL_CASE.")
+  in_progress
+    @deprecated(reason: "Enumerated values should be UPPER_CAMEL_CASE.")
+  action_required
+    @deprecated(reason: "Enumerated values should be UPPER_CAMEL_CASE.")
+  error_correction
+    @deprecated(reason: "Enumerated values should be UPPER_CAMEL_CASE.")
+  completed @deprecated(reason: "Enumerated values should be UPPER_CAMEL_CASE.")
+}
+
+enum ProfileType {
+  ARTIST
+  LABEL
+  INSIGHTS
+}
+
+enum Role {
+  ANALYTICS
+  ADMINISTRATOR
+  CATALOG
+  MARKETING
+  ACCOUNTING
+  MANAGE_RIGHTS
+  ADVERTISING
+}
+
+enum SocialPlatform {
+  DEEZER
+  FACEBOOK
+  INSTAGRAM
+  SPOTIFY
+  TWITTER
+  YOUTUBE
+  SOUNDCLOUD
+}
+
+enum AccountingPeriodType {
+  MONTH
+  QUARTER
+}
+
+enum SampleArtistType {
+  ARTIST
+  SONGWRITER
+  PRODUCER
+}
+
+enum EpisodeStates {
+  ALL
+  DONE
+  DRAFT
+}
+
+enum AdReadStatus {
+  NEW
+  SUBMITTED
+  REJECTED
+  COMPLETED
+}
+
+enum OwnerCategory {
+  CURATED
+  EDITORIAL
+  USER_GENERATED
+}
+
+enum SubaccountSplitType {
+  GROSS
+  NET
+}
+
+enum CollaboratorSplitRateType {
+  GROSS
+  NET
+}
+
+enum ParticipantServiceType {
+  APPLE_MUSIC
+  SPOTIFY
+}
+
+enum DemographicAgeCategory {
+  _17
+  _18_22
+  _23_27
+  _28_34
+  _35_44
+  _45_59
+  _60_
+  UNKNOWN
+}
+
+enum OperatingSystem {
+  IOS
+  ANDROID
+}
+
+enum SocialContentType {
+  VIDEO
+  IMAGE
+}
+
+enum CollaboratorPaymentStatus {
+  SET_UP
+  NOT_SET_UP
+}
+
+enum CollaboratorReportGenerationType {
+  AUTOMATED
+  MANUAL
+}
+
+enum TransferWiseProfileStatus {
+  UNVERIFIED
+  VERIFIED
+  ERROR
+}
+
+enum SocialPostsOrderBy {
+  DATE
+  POPULARITY
+}
+
+enum SocialFansOrderBy {
+  RELEVANCE
+  FOLLOWERS
+  MENTIONS
+}
+
+enum SocialFansType {
+  FAN
+  BLOG
+  RADIO
+  EVENT
+  FAN_PAGE
+}
+
+type ProductAnalytics {
+  streams: Streams!
+}
+
+type Product {
+  analytics: ProductAnalytics
+  artists: [Artist]
+  cLine: String
+  configuration: String
+  contextType: String
+  deletions: String
+  deliveredVersion: String
+  deliveryLinks: [StoreLink]
+  displayStatus: DisplayStatus
+  displayUpc: String
+  distributionFormatId: Int
+  format: String
+  labelParticipations: [LabelParticipation]
+  metaLanguage: String
+  preorderDate: Date
+  primaryArtists: [Artist]
+    @deprecated(reason: "Use `artists`. This field returns the Project artist.")
+  productConfiguration: String
+  productId: Int
+  productName: String
+  productTypeId: Int
+  project: Project
+  imageLocation(size: String): String
+  notForDistribution: String
+  numberOfStores: Int
+  releaseCorrectionId: Int
+  releaseDate: Date
+  releaseId: ID
+  saleStartDate: Date
+  specialInstructions: String
+  status: String
+  subaccountId: Int
+  subaccountName: String @deprecated(reason: "Use `subaccount`.")
+  subaccount: Subaccount
+  tracks: [Track]
+  typeOfVideo: String
+  upc: String
+  vendorId: Int
+  version: String
+  genreId: Int
+  subgenreId: Int
+  imprint: String
+}
+
+type VideoSingleProduct {
+  productId: Int
+}
+
+type ProductSearchResults {
+  totalCount: Int
+  products: [Product]
+}
+
+type Project {
+  primaryArtists: [Artist]
+  created: Date
+  description: String
+  productCount: Int
+  projectCode: String
+  projectHighlights: String
+  projectId: Int
+  projectName: String
+  updated: Date
+  vendorId: Int
+}
+
+type Artist {
+  artistId: ID
+  artistInfoId: Int
+  artistName: String
+  artistType: String
+  vendorId: Int
+}
+
+type ArtistSearchResult {
+  totalCount: Int
+  artists: [Artist]
+}
+
+type ProductDistributionSearch {
+  items: [ProductDistribution]
+}
+type ProductDistribution {
+  productId: ID
+  distributeTo: String
+}
+
+type TrackWriter {
+  trackWriterId: ID
+  trackWriterType: String
+  trackWriterName: String
+  artistInfoId: Int
+  track_writer_id: ID
+  type: String
+  name: String
+  artist_info_id: Int
+}
+
+type TrackAnalytics {
+  streams: Streams!
+}
+
+type TrackSampleArtist {
+  artistId: Int
+  artistName: String
+  artistType: String
+}
+
+type TrackSample {
+  sampleId: Int
+  uniqueTrackId: Int
+  sampleType: String
+  trackName: String
+  isrc: String
+  pLine: String
+  trackLength: Int
+  notes: String
+  updatedDate: String
+  artists: [TrackSampleArtist]
+}
+
+type TrackPublishing {
+  usPublishingObligation: String
+  thirdPartyPublisher: String
+  publisherNames: [String]
+}
+
+type Track {
+  analytics: TrackAnalytics
+  tuid: ID
+  explicit: String
+  isrc: String
+  productId: String
+  product: Product
+  writers: [TrackWriter]
+  metaLanguageCode: String
+  trackName: String
+  trackNumber: Int
+  trackType: String
+  originalRightsHolderCountryId: Int
+  ownershipRights: String
+  pInfo: String
+  previewStartTime: Int
+  primaryArtists: [Artist]
+  recordingCountryId: Int
+  upc: String
+  version: String
+  volumeNumber: Int
+  thumb: String
+  performers: [Performer]
+  artists: [Artist] @deprecated(reason: "Use `primaryArtists`.")
+  name: String @deprecated(reason: "Use `trackName`.")
+  number: Int @deprecated(reason: "Use `trackNumber`.")
+  trackCd: Int @deprecated(reason: "Use `volumeNumber`.")
+  product_id: Int @deprecated(reason: "Use `productId`.")
+  meta_language_code: String @deprecated(reason: "Use `metaLanguageCode`.")
+  p_info: String @deprecated(reason: "Use `pInfo`.")
+  ownership_rights: String @deprecated(reason: "Use `ownershipRights`.")
+  recording_country_id: Int @deprecated(reason: "Use `recordingCountryId`.")
+  original_rights_holder_country_id: Int
+    @deprecated(reason: "Use `originalRightsHolderCountryId`.")
+  preview_start_time: Int @deprecated(reason: "Use `previewStartTime`.")
+  soundRecording: SoundRecording
+  splits: [CollaboratorSplit]
+  samples: [TrackSample]
+  publishing: TrackPublishing
+  lyrics: String
+}
+
+type StoreError {
+  code: String
+  message: String
+  types: [String]
+}
+
+type Store {
+  storeId: Int!
+  storeName: String!
+  error: StoreError
+}
+
+type Region {
+  regionName: String!
+}
+
+type MarketStreams {
+  countryCode: String
+  growthPercentage: Float
+  region: Region
+  streams: Int
+}
+
+type StreamSource {
+  total: Int!
+  value: Float
+  growthPercentage: Float
+}
+
+type StreamsBySubscription {
+  subscription: StreamSource!
+  adSupported: StreamSource!
+  midTier: StreamSource!
+  sources: [Store]!
+}
+
+type SourceOfStreams {
+  active: StreamSource!
+  passive: StreamSource!
+  collection: StreamSource!
+  unknown: StreamSource!
+  sources: [Store]!
+}
+
+type StreamsBreakdown {
+  sourceOfStreams: SourceOfStreams!
+  streamsBySubscription: StreamsBySubscription!
+  active: StreamSource!
+  passive: StreamSource!
+  collection: StreamSource!
+  subscription: StreamSource!
+  adSupported: StreamSource!
+  midTier: StreamSource!
+  sources: [Store]!
+}
+
+type Timeseries {
+  date: Date
+  value: Float
+  skipRate: Float
+  saves: Int
+}
+
+type StreamData {
+  allTime: Long
+  items: [Timeseries]
+  growthPercentage: Float
+  skipRate: Float
+}
+
+type DownloadData {
+  items: [Timeseries]
+}
+
+type StoreStreamData {
+  data: StreamData
+  store: Store
+}
+
+type StoreDownloadData {
+  data: DownloadData
+  store: Store
+}
+
+type Streams {
+  aggregate: StreamData!
+  stores: [StoreStreamData]!
+  sources: [Store]!
+}
+
+type Downloads {
+  aggregate: DownloadData!
+  stores: [StoreDownloadData]!
+  sources: [Store]!
+}
+
+type TopMarkets {
+  sources: [Store]!
+  markets: [MarketStreams]!
+}
+
+type PlaylistStreams {
+  playlist: Playlist
+  streams: Long
+}
+
+type TopPlaylists {
+  playlists: [PlaylistStreams!]
+  sources: [Store]!
+  totalStreams: Long
+}
+
+type DemographicAge {
+  _17: Long
+  _18_22: Long
+  _23_27: Long
+  _28_34: Long
+  _35_44: Long
+  _45_59: Long
+  _60_: Long
+  UNKNOWN: Long
+}
+
+type DemographicGender {
+  male: Long
+  female: Long
+  unknown: Long
+}
+
+type Demographic {
+  age: DemographicAge
+  gender: DemographicGender
+}
+
+type Demographics {
+  isrc: String!
+  demographics: Demographic!
+  sources: [Store]!
+}
+
+type CountryStreams {
+  countryCode: String!
+  streams: Long!
+}
+
+type TopCountriesByStreams {
+  countries: [CountryStreams!]
+  sources: [Store]!
+}
+
+type CountryDownloads {
+  countryCode: String!
+  downloads: Long!
+}
+
+type TopCountriesByDownloads {
+  countries: [CountryDownloads!]
+  sources: [Store]!
+}
+
+type Analytics {
+  sourceOfStreams(
+    countries: [String]
+    startDate: String
+    days: Int
+  ): SourceOfStreams!
+  streams(
+    storeIds: [Int]
+    countries: [String]
+    startDate: String
+    days: Int
+  ): Streams!
+  downloads(
+    storeIds: [Int]
+    countries: [String]
+    startDate: String
+    days: Int
+  ): Downloads!
+  topPlaylists(
+    storeIds: [Int]
+    countries: [String]
+    startDate: String
+    days: Int
+    offset: Int
+    limit: Int
+  ): TopPlaylists!
+  topCountriesByStreams(
+    storeIds: [Int]
+    startDate: String
+    days: Int
+    offset: Int
+    limit: Int
+  ): TopCountriesByStreams!
+  topCountriesByDownloads(
+    storeIds: [Int]
+    startDate: String
+    days: Int
+    offset: Int
+    limit: Int
+  ): TopCountriesByDownloads!
+  topMarkets: TopMarkets!
+  streamsBreakdown(
+    storeIds: [Int]
+    countries: [String]
+    startDate: String
+    days: Int
+  ): StreamsBreakdown!
+  demographicBreakdown(
+    storeIds: [Int]
+    countries: [String]
+    startDate: String
+    days: Int
+  ): Demographics
+}
+
+type Playlist {
+  playlistId: String!
+  playlistName: String!
+  playlistUri: String!
+  followers: Int
+  imageLocation: String
+  source: Store!
+  storefront: String
+  countryCode: String
+  trackCount: Int
+  userDisplayName: String!
+  ownerCategory: OwnerCategory!
+}
+
+type Storefront {
+  trackCount: Int
+  storefrontUri: String
+  countryCode: String
+}
+
+type StorefrontPlacement {
+  added: Date
+  position: Int
+  previousPosition: Int
+  streams: Int
+  storefront: Storefront
+  soundRecording: SoundRecording
+}
+
+type PlaylistPlacement {
+  added: Date
+  position: Int
+  previousPosition: Int
+  streams: Int
+  playlist: Playlist
+  soundRecording: SoundRecording
+  storefrontPlacements: [StorefrontPlacement]
+}
+
+type PlaylistPlacements {
+  placements: [PlaylistPlacement]!
+  sources: [Store]!
+  totalCount: Int
+  unfilteredCount: Int
+}
+
+type SoundRecording {
+  isrc: String!
+  name: String
+  products(includeDeleted: Boolean): [Product]
+  imageLocation: String
+  primaryArtists: [Artist]
+  analytics: Analytics
+  playlistPlacements(
+    storeIds: [Int!]
+    ownerCategories: [OwnerCategory!]
+    minFollowers: Int
+  ): PlaylistPlacements
+}
+
+type StoreLink {
+  store_id: ID
+  store_name: String
+  link: String
+  go_live_date: Date
+}
+
+type ProductDelivery {
+  product_id: ID
+  store_links: [StoreLink]
+}
+
+type Feature {
+  feature: String
+  value: String
+}
+
+type User {
+  accountId: String
+    @deprecated(reason: "Please use Profile type instead of User type.")
+  accountType: String
+    @deprecated(reason: "Please use Profile type instead of User type.")
+  subaccountId: String
+    @deprecated(reason: "Please use Profile type instead of User type.")
+  userId: String
+    @deprecated(reason: "Please use Profile type instead of User type.")
+  name: String
+    @deprecated(reason: "Please use Profile type instead of User type.")
+  imageLocation: String
+    @deprecated(reason: "Please use Profile type instead of User type.")
+  features(regex: String): [Feature]
+    @deprecated(reason: "Please use Profile type instead of User type.")
+  access(include: [String]): [String]
+    @deprecated(reason: "Please use Profile type instead of User type.")
+}
+
+type Profile {
+  profileId: String!
+  profileName: String
+  profileType: ProfileType!
+  firstName: String
+  lastName: String
+  imageLocation: String
+  vendorId: Int
+  roles: [Role!]!
+  features(regex: String): [Feature!]!
+}
+
+type Device {
+  operatingSystem: String!
+  pushToken: String!
+  deviceId: String
+}
+
+type Account {
+  users: [User] @deprecated(reason: "Please use profiles field instead.")
+  profiles: [Profile!]!
+  features(regex: String): [Feature!]!
+}
+
+type Collaborator {
+  id: Int
+  name: String
+  email: String @deprecated(reason: "No longer collecting this value.")
+  soundRecordings: [SoundRecording!]!
+  tracks: [Track!]!
+  reports(reportType: String): [CollaboratorReport]
+  participant: Participant
+    @deprecated(reason: "Please use LabelParticipant type instead.")
+  labelParticipant: LabelParticipant
+  splitRateType: CollaboratorSplitRateType
+  performanceRights: Boolean
+  subaccountId: Int
+  paymentStatus: CollaboratorPaymentStatus
+  recipientId: Int
+}
+
+type CollaboratorResults {
+  totalCount: Int
+  collaborators: [Collaborator]
+}
+
+type CollaboratorReport {
+  fileName: String
+  collaboratorId: String
+  collaboratorParams: String
+  status: String
+  requestedDateTime: Date
+  generatedDateTime: Date
+  periodIds: String
+  fileFormat: String
+  userIdType: String
+  fileLocation: String
+  amount: Float
+  periodName: String
+  generationType: CollaboratorReportGenerationType
+}
+
+type CollaboratorReportsResults {
+  totalCount: Int!
+  reports: [CollaboratorReport!]!
+}
+
+type CollaboratorSplit {
+  id: Int
+  identifier: String
+  splitRate: Float
+  collaborator: Collaborator
+}
+
+type CollaboratorReportDownload {
+  url: String
+}
+
+type TransferWiseAccountRequirement {
+  type: String!
+  title: String!
+  fields: [TransferWiseAccountField!]!
+}
+
+type TransferWiseAccountField {
+  name: String!
+  key: String!
+  type: String!
+  required: Boolean
+  refreshRequirementsOnChange: Boolean
+  example: String
+  minLength: Int
+  maxLength: Int
+  validationRegexp: String
+  validationAsync: TransferWiseAsyncValidation
+  valuesAllowed: [TransferWiseAccountFieldValue!]
+}
+
+type TransferWiseAsyncValidation {
+  url: String!
+  params: [TransferWiseValidationParams!]!
+}
+
+type TransferWiseAccountFieldValue {
+  key: String!
+  name: String!
+}
+
+type TransferWiseProfile {
+  id: ID!
+  profileId: Int!
+  vendorId: Int!
+  subaccountId: Int
+  status: TransferWiseProfileStatus!
+}
+
+type TransferWiseAuthorizationUrl {
+  url: String!
+}
+
+type TransferWiseValidationParams {
+  key: String!
+  parameterName: String!
+  required: Boolean
+}
+
+type TransferwiseFieldValidationResult {
+  validation: Boolean!
+}
+
+type AccountingPeriod {
+  periodType: AccountingPeriodType!
+  firstPeriodId: Int!
+  lastPeriodId: Int!
+  year: Int!
+  quarter: Int!
+  month: Int
+}
+
+type SoundRecordingSearchResults {
+  totalCount: Int!
+  soundRecordings: [SoundRecording!]!
+}
+
+type ParticipantSearchResults {
+  totalCount: Int!
+  participants: [Participant!]!
+}
+
+type Podcast {
+  id: ID
+  networkId: Int
+  network: PodcastNetwork
+  title: String
+  description: String
+  slug: String
+  copyright: String
+  link: String
+  email: String
+  explicit: String
+  host: String
+  owner: String
+  language: String
+  showType: String
+  episodes(
+    limit: Int
+    offset: Int
+    filterByState: EpisodeStates
+    orderBy: String
+    sortOrder: SortDir
+  ): EpisodeResults!
+  episode(episodeId: ID!): Episode
+  categories: [Int]
+  createdDate: DateTime
+  artworkUrl: String
+  numEpisodes: Int
+  participants: [PodcastParticipant]
+}
+
+type PodcastCategory {
+  id: ID
+  name: String
+  children: [PodcastCategory]
+}
+
+type PodcastParticipant {
+  name: String
+  role: String
+  participantId: Int
+}
+
+type Episode {
+  id: ID
+  podcastId: Int
+  podcast: Podcast
+  title: String
+  description: String
+  seasonNumber: Int
+  episodeNumber: Int
+  episodeType: String
+  content: String
+  createdDate: DateTime
+  status: String
+  draft: Boolean
+  publishedDate: DateTime
+  insertionPoints: [EpisodeInsertionPoint!]!
+  artworkUrl: String
+  audioUrl: String
+  peaksUrl: String
+  audioOriginalFilename: String
+  duration: Int
+  plannedPreRollCount: Int
+  plannedMidRollCount: Int
+  plannedPostRollCount: Int
+}
+
+type EpisodeInsertionPoint {
+  id: ID!
+  pointType: String
+  count: Int
+  timecode: String
+}
+
+type EpisodeInsertionPointResult {
+  insertionPoints: [EpisodeInsertionPoint!]!
+}
+
+type DeletePodcastAssetResult {
+  id: ID
+}
+
+type InventoryResult {
+  podcastId: Int!
+}
+
+type PodcastResults {
+  totalCount: Int!
+  podcasts: [Podcast]
+}
+
+type EpisodeResults {
+  totalCount: Int!
+  totalDrafts: Int!
+  totalDone: Int!
+  episodes: [Episode]
+}
+
+type PodcastNetwork {
+  id: ID
+  name: String
+  isSony: Boolean
+  numEpisodes: Int
+  numShows: Int
+}
+
+type UploadToken {
+  bucket: String
+  filename: String
+  credentials: UploadTokenCredentials
+}
+
+type UploadTokenCredentials {
+  token: String
+  awsAccessKeyId: String
+  awsSecretAccessKey: String
+  expiration: String
+}
+
+type AssetFinal {
+  assetType: String
+  assetSubtype: String
+  filename: String
+  url: String
+  duration: Int
+}
+
+type AssetTranscoderStatus {
+  status: String
+  errors: String
+  assets: [AssetFinal]
+}
+
+type AdRead {
+  id: ID
+  title: String
+  podcastId: Int
+  episodeId: Int
+  podcast: Podcast
+  episode: Episode
+  copyUrlPath: String
+  dueDate: Date
+  status: AdReadStatus
+  adReadUrl: String
+  rejectionReason: String
+}
+
+type AdReadResults {
+  adReads: [AdRead]
+}
+
+type PodcastUser {
+  id: ID
+  name: String
+  email: String
+  admin: Boolean
+  role: String
+  organization: String
+  networks: [PodcastNetwork]
+}
+
+type PodcastUserResults {
+  totalCount: Int!
+  users: [PodcastUser]
+}
+
+type PodcastTopEpisode {
+  episodeId: Int!
+  podcastId: Int!
+  downloads: Int!
+  episode: Episode!
+  podcast: Podcast!
+}
+
+type EpisodeDailyDownloads {
+  episodeId: Int!
+  reportDate: Date!
+  downloads: Int!
+  publishedDate: DateTime!
+}
+
+type PodcastTopEpisodes {
+  totalCount: Int!
+  topEpisodes: [PodcastTopEpisode!]!
+}
+
+type PodcastTopPodcast {
+  podcastId: Int!
+  downloads: Int!
+  podcast: Podcast!
+}
+
+type PodcastDailyDownloads {
+  podcastId: Int!
+  reportDate: Date!
+  downloads: Int!
+  publishedDate: DateTime!
+}
+
+type PodcastTopPodcasts {
+  totalCount: Int!
+  topPodcasts: [PodcastTopPodcast!]!
+}
+
+type PodcastTopNetwork {
+  networkId: Int!
+  downloads: Int!
+  network: PodcastNetwork!
+}
+
+type NetworkDailyDownloads {
+  networkId: Int!
+  reportDate: Date!
+  downloads: Int!
+  publishedDate: DateTime!
+}
+
+type PodcastTopNetworks {
+  totalCount: Int!
+  topNetworks: [PodcastTopNetwork!]!
+}
+
+type PodcastCountry {
+  name: String!
+}
+
+type PodcastPlayer {
+  name: String!
+}
+
+type PodcastTopCountry {
+  objectId: Int
+  country: String
+  downloads: Int
+}
+
+type PodcastTopPlayer {
+  objectId: Int
+  player: String
+  downloads: Int
+}
+
+type ProductDistributionStatus {
+  status: String!
+}
+
+union SearchPodcastItemsResult = Podcast | PodcastNetwork | Episode
+
+type SearchResults {
+  productSearchResults(
+    status: [String]
+    term: String
+    subaccounts: [Int]
+    sortField: String
+    sortDir: SortDir
+    productType: [Int]
+    limit: Int
+    offset: Int
+    startDate: Date
+    endDate: Date
+    productConfiguration: [ProductConfiguration]
+    displayStatus: [DisplayStatus]
+  ): ProductSearchResults!
+  soundRecordingSearchResults(
+    term: String
+    limit: Int
+    offset: Int
+    trackType: TrackType
+  ): SoundRecordingSearchResults!
+  participantSearchResults(
+    term: String
+    limit: Int
+    offset: Int
+  ): ParticipantSearchResults!
+}
+
+type VendorCurrency {
+  vendorId: Int
+  currencyId: Int
+  code: String
+  symbol: String
+}
+
+type VideoChannel {
+  id: ID!
+  artistId: Int
+  channelId: Int
+  channelName: String
+  vevoControlled: Boolean
+}
+
+type AnalyticsFeed {
+  id: Int
+  storename: String
+  storeid: Int
+  name: String
+}
+
+type VendorAgreement {
+  vendorAgreementId: ID!
+  optInPreferenceId: Int
+  vendorId: Int
+  dateAccepted: Date
+  userId: Int
+  impersonatorUserId: Int
+}
+
+type Application {
+  name: String
+  url: String
+}
+
+type Query {
+  ProductDistributionSearch(productId: ID): ProductDistributionSearch
+  account: Account
+  analyticsFeeds: [AnalyticsFeed]!
+  allProductsSearch(
+    status: [String]
+    term: String
+    subaccounts: [Int]
+    sortField: String
+    sortDir: SortDir
+    productType: [Int]
+    limit: Int
+    offset: Int
+    startDate: Date
+    endDate: Date
+    productConfiguration: [ProductConfiguration]
+    displayStatus: [DisplayStatus]
+  ): ProductSearchResults
+  artistsSearch(term: String, limit: Int, offset: Int): ArtistSearchResult
+  soundRecordingsSearch(
+    term: String
+    limit: Int
+    offset: Int
+    trackType: String
+  ): SoundRecordingSearchResults!
+  product(productId: String!, cached: Boolean): Product
+  recentPlacements(
+    limit: Int
+    offset: Int
+    storeIds: [Int!]
+    ownerCategories: [OwnerCategory!]
+    minFollowers: Int
+  ): PlaylistPlacements
+  search(term: String, limit: Int, offset: Int): SearchResults!
+  soundRecording(isrc: String!, cached: Boolean): SoundRecording
+  deliveryLinks(productId: Int): ProductDelivery
+  collaborators(
+    limit: Int
+    offset: Int
+    hasRecipient: Boolean
+  ): CollaboratorResults
+  collaboratorSearch(
+    searchTerm: String!
+    hasRecipient: Boolean
+  ): CollaboratorResults
+  topSoundRecordings(metadataSource: String): [SoundRecording]
+  accountingPeriods: [AccountingPeriod]
+  collaborator(collaboratorId: Int!): Collaborator
+  podcasts(limit: Int, offset: Int): PodcastResults
+  podcast(podcastId: ID!): Podcast
+  podcastCategories: [PodcastCategory]
+  podcastNetworks: [PodcastNetwork]
+  podcastNetwork(networkId: ID!): PodcastNetwork
+  episodes(
+    podcastId: ID!
+    limit: Int
+    offset: Int
+    filterByState: EpisodeStates
+    orderBy: String
+    sortOrder: SortDir
+  ): EpisodeResults
+  episode(episodeId: ID!): Episode
+  assetTranscoderUploadToken: UploadToken
+  podcastUploadToken: UploadToken
+  assetTranscoderUploadStatus(filename: String!): AssetTranscoderStatus
+  featureFlag(name: String!): Boolean
+  adReads: AdReadResults
+  podcastUsers(limit: Int, offset: Int): PodcastUserResults
+  currentPodcastUser: PodcastUser
+  podcastTopEpisodes(
+    limit: Int!
+    offset: Int!
+    dateRange: String!
+    country: String
+    player: String
+    sortField: String
+    sortOrder: SortDir
+    networkId: Int
+    podcastId: Int
+  ): PodcastTopEpisodes!
+  getEpisodeDailyDownloads(
+    episodeIds: [Int!]!
+    dateRange: String!
+    country: String
+    player: String
+  ): [EpisodeDailyDownloads!]!
+  podcastTopPodcasts(
+    limit: Int!
+    offset: Int!
+    dateRange: String!
+    country: String
+    player: String
+    sortField: String
+    sortOrder: SortDir
+    networkId: Int
+  ): PodcastTopPodcasts!
+  getPodcastDailyDownloads(
+    podcastIds: [Int!]!
+    dateRange: String!
+    country: String
+    player: String
+  ): [PodcastDailyDownloads!]!
+  podcastTopNetworks(
+    limit: Int!
+    offset: Int!
+    dateRange: String!
+    country: String
+    player: String
+    sortField: String
+    sortOrder: SortDir
+  ): PodcastTopNetworks!
+  getNetworkDailyDownloads(
+    networkIds: [Int!]!
+    dateRange: String!
+    country: String
+    player: String
+  ): [NetworkDailyDownloads!]!
+  podcastCountries: [PodcastCountry]
+  podcastPlayers: [PodcastPlayer]
+  podcastTopCountries(
+    objectId: Int!
+    objectType: String!
+    dateRange: String!
+    player: String
+  ): [PodcastTopCountry]
+  podcastTopPlayers(
+    objectId: Int!
+    objectType: String!
+    dateRange: String!
+    country: String
+  ): [PodcastTopPlayer]
+  searchPodcastItems(text: String!): [SearchPodcastItemsResult!]
+  artist(artistId: Int!): Artist
+  collaboratorReports(
+    reportType: String
+    isSummaryReport: Boolean
+    limit: Int
+    offset: Int
+    orderBy: String
+    sortOrder: SortDir
+  ): CollaboratorReportsResults
+  collaboratorReportDownload(
+    collaboratorParams: String!
+  ): CollaboratorReportDownload
+  transferWiseAccountRequirements(
+    source: String!
+    target: String!
+  ): [TransferWiseAccountRequirement]
+  transferWiseAuthorizationUrl: TransferWiseAuthorizationUrl
+  transferWiseProfile: TransferWiseProfile
+  filterArtists(artistName: String, artistId: Int, vendorId: Int): [Artist]
+  participant(id: ID!, global: Boolean): Participant!
+  participantSearch(
+    name: String!
+    vendorId: Int!
+    subaccountId: Int
+    limit: Int
+    offset: Int
+  ): ParticipantSearchResult
+    @deprecated(reason: "Renaming to reflect private data.")
+  labelParticipantSearch(
+    name: String!
+    vendorId: Int!
+    subaccountId: Int
+    role: String
+    limit: Int
+    offset: Int
+  ): ParticipantSearchResult
+  networkParticipantSearch(
+    name: String!
+    networkId: Int!
+  ): NetworkParticipantSearchResult
+  globalParticipantById(
+    id: ID
+    chartmetricId: Int
+    spotifyId: String
+    appleMusicId: Int
+  ): [Participant]
+  globalParticipantSearchByName(
+    term: String!
+    first: Int
+    offset: Int
+  ): [Participant]
+  globalParticipantByProfile(skip: Int, limit: Int): [Participant]
+  recommendedParticipants: [Participant]
+  participationRoleCategories: [ParticipationRoleCategory!]
+  projectByProjectCode(
+    projectCode: String!
+    accountId: Int!
+    subaccountId: Int!
+  ): Project
+  participantServiceSearch(
+    service: ParticipantServiceType!
+    query: String!
+    limit: Int
+    offset: Int
+  ): ParticipantServiceSearchResult
+  participantServiceArtist(
+    service: ParticipantServiceType!
+    identifier: String!
+  ): ServiceArtist
+  vendorCurrency: VendorCurrency
+  getAvailableVideoChannelsByProductId(productId: Int!): [VideoChannel]
+  getAvailableVideoChannelsByProjectId(
+    projectId: Int!
+    accountId: Int
+    subaccountId: Int
+  ): [VideoChannel]
+  starredItems: StarredItems!
+  getVendorAgreement(
+    optInPreferenceId: Int!
+    excludeImpersonator: Boolean
+  ): VendorAgreement
+  applications: [Application]
+  track(tuid: ID!): Track
+  transferWiseValidateField(
+    url: String!
+    params: [TransferWiseFieldValidationQueryParams!]
+  ): TransferwiseFieldValidationResult
+}
+
+type StarredItems {
+  participants: [Participant!]!
+}
+
+
+input CollaboratorInput {
+  name: String!
+  email: String
+  subaccountId: Int
+  participantId: Int
+}
+
+input UpdateCollaboratorInput {
+  id: Int!
+  name: String
+  email: String
+  splitRateType: CollaboratorSplitRateType
+  performanceRights: Boolean
+}
+
+input CreateTransferWiseRecipientInput {
+  profileId: Int!
+  collaboratorId: Int!
+  accountHolderName: String
+  currency: String!
+  legalType: String
+  type: String!
+  abartn: String
+  accountNumber: String
+  accountType: String
+  addressCountry: String
+  addressCity: String
+  addressState: String
+  addressFirstLine: String
+  addressPostCode: String
+}
+
+input CreateTransferWiseProfileInput {
+  profileId: Int!
+  code: String!
+  subaccountId: Int
+}
+
+input CreateProjectInput {
+  projectCode: String!
+  name: String!
+  artistId: Int
+  description: String
+  accountId: Int
+  subaccountId: Int
+}
+
+input CreateCollaboratorSplitInput {
+  splitTypeId: Int!
+  identifier: String!
+  splitRate: Float!
+  collaboratorId: Int!
+}
+
+input UpdateCollaboratorSplitInput {
+  id: Int!
+  splitRate: Float
+  collaboratorId: Int
+}
+
+input DeleteCollaboratorSplitInput {
+  id: Int!
+}
+
+input SaveCollaboratorSplitsInput {
+  create: [CreateCollaboratorSplitInput!]
+  update: [UpdateCollaboratorSplitInput!]
+  delete: [DeleteCollaboratorSplitInput!]
+}
+
+type SaveCollaboratorSplitsResult {
+  created: [CollaboratorSplit!]!
+  updated: [CollaboratorSplit!]!
+  deleted: [Int!]!
+}
+
+input TriggerCollaboratorsReportGenerationInput {
+  firstPeriodId: Int!
+  lastPeriodId: Int!
+  periodName: String!
+  clientEmail: String!
+  reportRunName: String!
+  collaboratorIds: [Int]
+}
+
+type TriggerCollaboratorsReportGenerationResponse {
+  accepted: Boolean
+}
+
+input DeleteCollaboratorReportInput {
+  collaboratorParams: String!
+}
+
+type DeleteCollaboratorReportResponse {
+  deleted: Boolean
+  collaboratorParams: String
+}
+
+type CreateTransferWiseRecipientResponse {
+  id: Int!
+}
+
+input UpdateProjectInput {
+  projectId: Int!
+  artistId: Int
+  name: String
+  description: String
+  projectCode: String
+  projectHighlights: String
+}
+
+input CreateArtistInput {
+  artistName: String!
+  artistType: String
+  artistId: Int
+  artistInfoId: Int
+  vendorId: Int
+  subaccountId: Int
+}
+
+input SaveArtistsInput {
+  create: [CreateArtistInput]
+}
+
+input CreateProductInput {
+  accountId: Int
+  accountType: String
+  channelSelection: String
+  cLine: String
+  deliveredVersion: String
+  description: String
+  format: String
+  genreId: Int
+  metaLanguage: String
+  pLine: String
+  primaryArtists: [CreateArtistInput]
+  productCode: String
+  productHighlights: String!
+  productName: String!
+  productConfiguration: ProductConfiguration
+  projectId: Int!
+  specialInstructions: String
+  subaccountId: Int
+  subgenreId: Int
+  upc: String
+  version: String
+  imprint: String
+}
+
+input UpdateProductInput {
+  accountId: Int
+  accountType: String
+  artistId: Int
+  channelSelection: String
+  cLine: String
+  deliveredVersion: String
+  description: String
+  format: String
+  genreId: Int
+  imprint: String
+  manufacturerUpc: String
+  metaLanguage: String
+  notForDistribution: String
+  pLine: String
+  preorderDate: String
+  previewable: String
+  primaryArtists: [CreateArtistInput]
+  productCode: String
+  productHighlights: String
+  productId: Int!
+  productName: String
+  projectCode: String
+  productConfiguration: ProductConfiguration
+  projectId: String
+  releaseDate: String
+  saleStartDate: String
+  specialInstructions: String
+  subgenreId: Int
+  vendorReleaseIdentifier: String
+  version: String
+}
+
+input CreateVideoSingleProductInput {
+  accountId: Int
+  associatedTrackId: Int
+  channelSelection: String
+  clineYear: Int
+  clineCopyrightHolder: String
+  description: String
+  genreId: Int
+  imprint: String
+  isrc: String
+  languageOfVideoContent: String
+  languageOfVideoTitle: String
+  lyrics: String
+  primaryArtists: [CreateArtistInput]
+  productCode: String
+  projectId: String!
+  subaccountId: Int
+  parentalAdvisory: String
+  plineYear: Int
+  plineCopyrightHolder: String
+  specialInstructions: String
+  subgenreId: Int
+  typeOfVideo: String
+  upc: String
+  version: String
+  videoTitle: String
+}
+
+input UpdateVideoSingleProductInput {
+  accountId: Int
+  associatedTrackId: Int
+  channelSelection: String
+  clineYear: Int
+  clineCopyrightHolder: String
+  description: String
+  genreId: Int
+  imprint: String
+  languageOfVideoContent: String
+  languageOfVideoTitle: String
+  lyrics: String
+  primaryArtists: [CreateArtistInput]
+  productId: String!
+  parentalAdvisory: String
+  plineYear: Int
+  plineCopyrightHolder: String
+  specialInstructions: String
+  subaccountId: Int
+  subgenreId: Int
+  typeOfVideo: String
+  version: String
+  videoTitle: String
+}
+
+input SaveVideoSingleProductInput {
+  create: CreateVideoSingleProductInput
+  update: UpdateVideoSingleProductInput
+}
+
+input CreateTrackArtistInput {
+  artistName: String!
+  artistType: String!
+  artistInfoId: Int
+  trackArtistId: Int
+}
+
+input CreateTrackWriterInput {
+  writerName: String!
+  writerType: String
+  artistInfoId: Int
+  trackWriterId: Int
+}
+
+input CreateTrackPerformerInput {
+  name: String!
+  roleId: Int!
+  type: String!
+}
+
+input CreateTrackPublisherInput {
+  name: String!
+}
+
+type Performer {
+  id: Int!
+  name: String!
+  roleId: Int!
+  type: String!
+}
+
+type UnsubmitProductResult {
+  result: String!
+}
+
+input SubmitProductInput {
+  productId: ID!
+  vendorId: ID
+  subaccountId: ID
+}
+
+input UnsubmitProductInput {
+  productId: ID!
+}
+
+input CreateProductCorrectionInput {
+  productId: ID!
+}
+
+type CreateProductCorrectionResult {
+  releaseCorrectionId: Int
+  releaseId: Int
+  status: String
+}
+
+input DeleteProductCorrectionInput {
+  productId: ID!
+  releaseCorrectionId: ID!
+}
+
+type DeleteProductCorrectionResult {
+  message: String
+}
+
+type ProductCorrectionDetail {
+  correctionDetailId: Int
+  keyId: Int
+  keyValue: String
+  tableName: String
+  fieldName: String
+}
+
+input ProductCorrectionDetailInput {
+  productId: Int!
+  releaseCorrectionId: Int!
+  corrections: [CorrectionDetailInput!]!
+}
+
+input CorrectionDetailInput {
+  keyId: Int
+  keyValue: String!
+  tableName: String!
+  fieldName: String!
+}
+
+input SampleArtistInput {
+  artistName: String
+  artistType: SampleArtistType
+}
+
+input CreateSampleInput {
+  sampleType: String
+  trackName: String!
+  isrc: String
+  pLine: String
+  trackLength: Int
+  notes: String
+  artists: [SampleArtistInput]
+}
+
+input CreateTrackInput {
+  trackName: String!
+  volumeNumber: Int
+  trackNumber: Int
+  upc: String
+  explicit: String!
+  pInfo: String
+  recordingCountryId: Int
+  originalRightsHolderCountryId: Int
+  metaLanguageCode: String
+  ownershipRights: String
+  version: String
+  isrc: String
+  trackType: String
+  previewStartTime: Int
+  artists: [CreateTrackArtistInput]
+  writers: [CreateTrackWriterInput]
+  performers: [CreateTrackPerformerInput]
+  publishers: [CreateTrackPublisherInput]
+  lyrics: String
+  samples: [CreateSampleInput]
+}
+
+input CreateTracksInput {
+  productId: Int!
+  tracks: [CreateTrackInput]
+}
+
+input UpdateTrackPositionInput {
+  trackNumber: Int!
+  volumeNumber: Int!
+  tuid: Int!
+}
+
+input UpdateTracksPositionInput {
+  productId: Int!
+  tracks: [UpdateTrackPositionInput!]!
+}
+
+input DeleteTracksInput {
+  productId: ID!
+  tracks: [ID!]!
+}
+
+input UpdateTrackBodyInput {
+  trackName: String
+  upc: String
+  explicit: String
+  pInfo: String
+  recordingCountryId: Int
+  originalRightsHolderCountryId: Int
+  metaLanguageCode: String
+  ownershipRights: String
+  version: String
+  isrc: String
+  trackType: String
+  previewStartTime: Int
+  artists: [CreateTrackArtistInput]
+  writers: [CreateTrackWriterInput]
+  performers: [CreateTrackPerformerInput]
+  publishers: [CreateTrackPublisherInput]
+  lyrics: String
+  samples: [CreateSampleInput]
+}
+
+input UpdateTracksBodyInput {
+  tracks: [ID!]!
+  body: UpdateTrackBodyInput
+}
+
+input SaveTracksInput {
+  create: CreateTracksInput
+  updatePosition: UpdateTracksPositionInput
+  delete: DeleteTracksInput
+  update: UpdateTracksBodyInput
+}
+
+input PodcastParticipantInput {
+  name: String!
+  role: String!
+  participantId: Int!
+}
+
+input CreatePodcastInput {
+  networkId: Int!
+  title: String!
+  description: String!
+  slug: String!
+  copyright: String!
+  link: String
+  email: String!
+  explicit: String!
+  showType: String!
+  host: String!
+  owner: String!
+  language: String!
+  categories: [Int!]!
+  artworkFilename: String!
+  participants: [PodcastParticipantInput!]
+}
+
+input UpdatePodcastInput {
+  id: ID!
+  title: String
+  description: String
+  copyright: String
+  link: String
+  email: String
+  explicit: String
+  showType: String
+  host: String
+  owner: String
+  language: String
+  artworkFilename: String
+  categories: [Int!]
+  participants: [PodcastParticipantInput!]
+}
+
+input CreateEpisodeInput {
+  podcastId: Int!
+  title: String!
+  description: String
+  seasonNumber: Int
+  episodeNumber: Int
+  episodeType: String
+  content: String
+  publishedDate: DateTime
+  plannedPreRollCount: Int
+  plannedMidRollCount: Int
+  plannedPostRollCount: Int
+  artworkFilename: String
+  audioFilename: String
+  draft: Boolean!
+}
+
+input UpdateEpisodeInput {
+  id: ID!
+  podcastId: Int!
+  title: String!
+  description: String
+  seasonNumber: Int
+  episodeNumber: Int
+  episodeType: String
+  content: String
+  publishedDate: DateTime
+  plannedPreRollCount: Int
+  plannedMidRollCount: Int
+  plannedPostRollCount: Int
+  artworkFilename: String
+  audioFilename: String
+  draft: Boolean!
+}
+
+input DeletePodcastInput {
+  id: ID
+}
+
+input DeleteEpisodeInput {
+  id: ID!
+  podcastId: Int!
+}
+
+input CreateEpisodeInsertionPointInput {
+  pointType: String!
+  count: Int!
+  timecode: String!
+}
+
+input CreateEpisodeInsertionPointsInput {
+  podcastId: Int!
+  episodeId: Int!
+  insertionPoints: [CreateEpisodeInsertionPointInput!]!
+}
+
+input CreateInventoryInput {
+  podcastId: Int!
+  dates: [DateTime!]!
+  preRolls: Int!
+  midRolls: Int!
+  postRolls: Int!
+  titlePrefix: String!
+}
+
+input CreateAdReadInput {
+  title: String!
+  podcastId: Int!
+  episodeId: Int!
+  copyUrlPath: String!
+  dueDate: Date!
+}
+
+input UpdateAdReadInput {
+  id: ID!
+  status: AdReadStatus
+  rejectionReason: String
+  adReadUrl: String
+}
+
+input DeleteAdReadInput {
+  id: ID!
+}
+
+input DeletePodcastUserInput {
+  id: ID!
+}
+
+input CreatePodcastUserInput {
+  name: String!
+  email: String!
+  admin: Boolean
+  role: String
+  organization: String!
+  networkIds: [Int!]!
+}
+
+input UpdatePodcastUserInput {
+  id: ID!
+  networkIds: [Int!]
+}
+
+input VendorAgreementInput {
+  optInPreferenceId: Int!
+  userId: Int
+  impersonatorUserId: Int
+}
+
+input LinkParticipantSocialPlatformUrlInput {
+  participantId: String!
+  callbackUrl: String!
+  platform: SocialPlatform!
+}
+
+input UnlinkParticipantSocialPlatformInput {
+  participantId: String!
+  platform: SocialPlatform!
+}
+
+input InstagramCommentInput {
+  participantId: String!
+  postId: ID!
+  comment: String!
+}
+
+input TransferWiseFieldValidationQueryParams {
+  parameterName: String!
+  parameterValue: String!
+}
+
+enum NotificationType {
+  PUSH_NOTIFICATIONS
+  EMAIL
+}
+
+enum NotificationFeedType {
+  SOCIAL_SPIKE
+}
+
+input NotificationMutationInput {
+  notificationType: NotificationType!
+  feedType: NotificationFeedType!
+}
+
+input ProductDistributionInput {
+  distributeTo: String!
+}
+
+type Mutation {
+  createCollaborator(input: CollaboratorInput): Collaborator
+  updateCollaborator(input: UpdateCollaboratorInput): Collaborator
+  saveCollaboratorSplits(
+    input: SaveCollaboratorSplitsInput
+  ): SaveCollaboratorSplitsResult
+  triggerCollaboratorsReportGeneration(
+    input: TriggerCollaboratorsReportGenerationInput
+  ): TriggerCollaboratorsReportGenerationResponse
+  deleteCollaboratorReport(
+    input: DeleteCollaboratorReportInput
+  ): DeleteCollaboratorReportResponse
+  createTransferWiseRecipient(
+    input: CreateTransferWiseRecipientInput
+  ): CreateTransferWiseRecipientResponse
+  refreshTransferWiseRecipientRequirements(
+    input: CreateTransferWiseRecipientInput
+  ): [TransferWiseAccountRequirement]
+  createTransferWiseProfile(
+    input: CreateTransferWiseProfileInput
+  ): TransferWiseProfile
+  createProject(input: CreateProjectInput): Project
+  updateProject(input: UpdateProjectInput): Project
+  saveArtists(input: SaveArtistsInput): [Artist]
+  createProduct(input: CreateProductInput): Product
+  updateProduct(input: UpdateProductInput): Product
+  saveVideoSingleProduct(input: SaveVideoSingleProductInput): VideoSingleProduct
+  submitProduct(input: SubmitProductInput): Product
+  unsubmitProduct(input: UnsubmitProductInput): UnsubmitProductResult
+  createProductCorrection(
+    input: CreateProductCorrectionInput
+  ): CreateProductCorrectionResult
+  deleteProductCorrection(
+    input: DeleteProductCorrectionInput
+  ): DeleteProductCorrectionResult
+  createProductCorrectionDetail(
+    input: ProductCorrectionDetailInput
+  ): [ProductCorrectionDetail]
+  saveTracks(input: SaveTracksInput): [Track]
+  createPodcast(input: CreatePodcastInput): Podcast
+  updatePodcast(input: UpdatePodcastInput): Podcast
+  createEpisode(input: CreateEpisodeInput): Episode
+  updateEpisode(input: UpdateEpisodeInput): Episode
+  deletePodcast(input: DeletePodcastInput): Podcast
+  deleteEpisode(input: DeleteEpisodeInput): Episode
+  createInventory(input: CreateInventoryInput): InventoryResult
+  createEpisodeInsertionPoints(
+    input: CreateEpisodeInsertionPointsInput
+  ): EpisodeInsertionPointResult
+  createAdRead(input: CreateAdReadInput): AdRead
+  updateAdRead(input: UpdateAdReadInput): AdRead
+  deleteAdRead(input: DeleteAdReadInput): AdRead
+  deletePodcastUser(input: DeletePodcastUserInput): PodcastUser
+  createPodcastUser(input: CreatePodcastUserInput): PodcastUser
+  updatePodcastUser(input: UpdatePodcastUserInput): PodcastUser
+  participantCreate(input: ParticipantCreateInput): Participant
+    @deprecated(reason: "Renaming to reflect private data.")
+  participantUpdate(input: ParticipantUpdateInput): Participant
+    @deprecated(reason: "Renaming to reflect private data.")
+  participantDelete(input: ParticipantDeleteInput): Participant
+    @deprecated(reason: "Renaming to reflect private data.")
+  participantIncorrectProfile(input: ParticipantIncorrectProfileInput): Boolean
+    @deprecated(reason: "Renaming to reflect private data.")
+  labelParticipantIncorrectProfile(
+    input: ParticipantIncorrectProfileInput
+  ): Boolean
+  labelParticipantCreate(input: ParticipantCreateInput): Participant
+  labelParticipantUpdate(input: ParticipantUpdateInput): Participant
+  networkParticipantCreate(
+    input: NetworkParticipantCreateInput
+  ): NetworkParticipant
+  registerUserDevice(input: RegisterUserDeviceInput): Device
+  updateUserLocalization(localization: String!): String
+  unregisterUserDevice(input: UnregisterUserDeviceInput): Boolean
+  logoutMobileDevice(input: LogoutMobileDeviceInput): Boolean
+  followParticipant(input: FollowParticipantInput): Participant!
+  unfollowParticipant(input: FollowParticipantInput): Participant!
+  createVendorAgreement(input: VendorAgreementInput): VendorAgreement
+  linkParticipantSocialPlatformUrl(
+    input: LinkParticipantSocialPlatformUrlInput!
+  ): String
+  unlinkParticipantSocialPlatform(
+    input: UnlinkParticipantSocialPlatformInput
+  ): Participant!
+  instagramComment(input: InstagramCommentInput): SocialPost
+  subscribeByNotificationType(input: NotificationMutationInput): Boolean
+  unsubscribeByNotificationType(input: NotificationMutationInput): Boolean
+  updateProductDistributionTo(
+    input: ProductDistributionInput
+  ): ProductDistributionStatus
+}
+
+type Vendor {
+  id: ID!
+}
+
+type Subaccount {
+  id: ID!
+  vendorId: ID
+  subaccountName: String
+  description: String
+  countryId: Int
+  commissionOverride: Float
+  subaccountSplitType: SubaccountSplitType
+}
+
+type LabelParticipant {
+  id: ID!
+  name: String!
+  appleMusicId: ID
+  spotifyId: ID
+  collaborator: Collaborator
+  vendor: Vendor!
+  subaccount: Subaccount!
+}
+
+type LabelParticipation {
+  role: String!
+  labelParticipant: LabelParticipant!
+}
+
+type Participant {
+  id: ID!
+  name: String!
+  appleMusicId: ID
+  spotifyId: ID
+  chartmetricId: ID
+  imageLocation: String
+  coverImageLocation: String
+  collaborator: Collaborator
+    @deprecated(reason: "Please use LabelParticipant type instead.")
+  vendor: Vendor!
+    @deprecated(reason: "Please use LabelParticipant type instead.")
+  subaccount: Subaccount!
+    @deprecated(reason: "Please use LabelParticipant type instead.")
+  following: Boolean!
+  socialData(platforms: [SocialPlatform!]): ParticipantSocialData!
+  relatedParticipants: RelatedParticipants!
+}
+
+type NetworkParticipant {
+  id: ID
+  name: String
+  networkId: Int
+}
+
+type RelatedParticipants {
+  spotifyMonthlyListeners: RelatedParticipantsMetric!
+}
+
+type RelatedParticipantsMetric {
+  participants: [Participant!]!
+  genres: [String!]!
+}
+
+type ParticipationRoleCategory {
+  name: String!
+  roles: [ParticipationRole!]!
+}
+
+type ParticipationRole {
+  appleRoleName: String
+  ddexRoleName: String
+  name: String!
+  category: ParticipationRoleCategory!
+}
+
+type ParticipantSocialData {
+  totalFollowers: Long
+  totalListeners: Long
+  spotifyPopularity: SpotifyPopularity
+  socialAccounts(platforms: [SocialPlatform!]): [SocialAccount!]!
+  mentions(
+    limit: Int
+    offset: Int
+    minFollowers: Int
+    maxFollowers: Int
+    platforms: [SocialPlatform]
+    orderBy: SocialPostsOrderBy
+  ): [SocialPost]
+  posts(
+    limit: Int
+    offset: Int
+    minFollowers: Int
+    platforms: [SocialPlatform]
+    orderBy: SocialPostsOrderBy
+  ): [SocialPost]
+  fans(
+    limit: Int
+    offset: Int
+    minFollowers: Int
+    maxFollowers: Int
+    platforms: [SocialPlatform]
+    orderBy: SocialFansOrderBy
+    fanTypes: [SocialFansType!]
+  ): [SocialFan]
+}
+
+type SpotifyPopularity {
+  index: Int
+  fanConversionPercentage: Float
+  monthlyListeners: RankedMetric
+}
+
+type RankedMetric {
+  value: Long
+  rank: Long
+}
+
+type SocialFan {
+  id: ID!
+  platform: SocialPlatform!
+  username: String
+  displayName: String
+  verified: Boolean!
+  imageLocation: String
+  mentions: Int
+  followers: Int
+  posts: [SocialPost]
+}
+
+type SocialPostLink {
+  url: String
+}
+
+type SocialPost {
+  id: ID!
+  postId: ID!
+  platform: SocialPlatform!
+  createdDate: DateTime!
+  content: String
+  creator: SocialFan!
+  views: Int
+  likes: Int
+  reposts: Int
+  comments: Int
+  links: [SocialPostLink]
+  url: String!
+  imageLocation: String
+    @deprecated(reason: "Retrieve images from assets field.")
+  assets: [SocialAsset!]!
+}
+
+type SocialAsset {
+  url: String!
+  contentType: SocialContentType!
+}
+
+type SocialAccount {
+  url: String
+  platform: SocialPlatform!
+  followers: SocialAccountFollowers!
+  linked: Boolean!
+}
+
+type SocialAccountFollowers {
+  growthPercentage: Float
+  totalFollowersPercentage: Float
+  totalFollowersDifference: Long
+  total: Long
+  items(startDate: String, days: Int): [DailyTimeseries!]!
+}
+
+type DeltaGrowth {
+  value: Float
+  growthPercentage: Float
+}
+
+type DailyTimeseries {
+  date: Date!
+  value: Float
+  dailyChange: DeltaGrowth
+}
+
+input NetworkParticipantCreateInput {
+  name: String!
+  networkId: Int!
+}
+
+input ParticipantCreateInput {
+  name: String!
+  vendorId: ID!
+  subaccountId: ID!
+  collaboratorId: ID
+  spotifyId: String
+  appleMusicId: String
+}
+
+input ParticipantUpdateInput {
+  id: ID!
+  name: String
+  vendorId: ID
+  subaccountId: ID
+  collaboratorId: ID
+  spotifyId: String
+  appleMusicId: String
+}
+
+input ParticipantDeleteInput {
+  id: ID!
+}
+
+input ParticipantIncorrectProfileInput {
+  participantId: ID!
+  participantName: String
+  message: String!
+  vendorId: ID!
+  subaccountId: ID!
+  productId: ID
+  productName: String
+  upc: String
+}
+
+type ParticipantSearchResult {
+  participants: [Participant]
+  totalCount: Int
+}
+
+type NetworkParticipantSearchResult {
+  participants: [NetworkParticipant]
+  totalCount: Int
+}
+
+type ServiceArtist {
+  identifier: String!
+  name: String!
+  followers: Int
+  genres: [String]
+  url: String
+  image: String
+}
+
+type ParticipantServiceSearchResult {
+  serviceArtists: [ServiceArtist]
+}
+
+input RegisterUserDeviceInput {
+  operatingSystem: OperatingSystem!
+  pushToken: String!
+  deviceId: String
+}
+
+input UnregisterUserDeviceInput {
+  deviceId: String!
+}
+
+input LogoutMobileDeviceInput {
+  refreshToken: ID!
+  deviceId: String!
+}
+
+input FollowParticipantInput {
+  participantId: ID!
+}
