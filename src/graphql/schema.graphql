@@ -1,0 +1,30 @@
+scalar Date
+scalar DateTime
+scalar Time
+scalar Long
+
+type Query {
+  ProductDistributionSearch(productId: ID): ProductDistributionSearch
+}
+
+type Mutation {
+  updateProductDistributionTo(
+    input: ProductDistributionInput
+  ): ProductDistributionStatus
+}
+
+type ProductDistributionSearch {
+  items: [ProductDistribution]
+}
+type ProductDistribution {
+  productId: ID
+  distributeTo: String
+}
+
+type ProductDistributionStatus {
+  status: String!
+}
+
+input ProductDistributionInput {
+  distributeTo: String!
+}
