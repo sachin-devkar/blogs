@@ -9,7 +9,7 @@ import thunk from "redux-thunk";
 const store = createStore(reducer, applyMiddleware(thunk));
 ReactDOM.render(
 
-  <app111334443>
+  <app77777>
 
   <soham></soham>
   <Provider store={store}>
