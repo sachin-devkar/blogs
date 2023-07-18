@@ -10,6 +10,7 @@ const store = createStore(reducer, applyMiddleware(thunk));
 ReactDOM.render(
 
   <app111>
+
   <soham></soham>
   <Provider store={store}>
     <App />
